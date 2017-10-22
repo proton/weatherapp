@@ -2,3 +2,11 @@ ru:
   forecasts:
     index:
       show: Показать
+      city: 'Город:'
+      enter_city: Введите город
+      country: 'Страна:'
+      enter_country: Введите страну
+    forecast:
+      error: Ошибка
+      weather_in_x: Погода в городе %{city}
+      temperature: 'Температура: %{temperature} °C'
