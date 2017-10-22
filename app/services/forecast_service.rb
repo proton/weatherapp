@@ -36,6 +36,8 @@ class ForecastService
 
   def parse_response
     forecast.raw_response = JSON.parse(@response.body)
+    return err_response('City not found') if forecast.raw_response['cod'].to_i == 404
+
     forecast.city = forecast.raw_response['name']
     weather = forecast.raw_response['weather'].first
     forecast.icon = "http://openweathermap.org/img/w/#{weather['icon']}.png"
