@@ -1,4 +1,3 @@
-
 - if forecast.error
   .alert.alert-danger
     h1= t('.error')
@@ -7,4 +6,9 @@
   .jumbotron
     h1.display-3
       = t '.weather_in_x', city: forecast.city
-    p.lead= forecast.raw_response
+    p.lead
+      = image_tag forecast.icon
+      '
+      = forecast.weather_state
+      br
+      = t '.temperature', temperature: forecast.temperature

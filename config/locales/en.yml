@@ -9,3 +9,4 @@ en:
     forecast:
       error: Error
       weather_in_x: Weather in %{city}
+      temperature: 'Temperature: %{temperature} °C'

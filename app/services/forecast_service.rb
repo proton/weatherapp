@@ -3,7 +3,8 @@ class ForecastService
 
   attr_reader :city
   attr_reader :country
-  attr_accessor :forecast
+  attr_reader :forecast
+  attr_reader :response
 
   def initialize(city, country)
     @city = city if city.present?
@@ -19,11 +20,37 @@ class ForecastService
   private
 
   def process_request
-    if city.blank?
-      forecast.error = 'City is blank'
-      return
+    return err_response('City is blank') if city.blank?
+    return err_response('OPEN_WEATHER_MAP_API_KEY is blank') if OPEN_WEATHER_MAP_API_KEY.blank?
+
+    query = "#{city}"
+    # TODO: country code support
+    url = 'http://api.openweathermap.org/data/2.5/weather'
+    begin
+      @response = Faraday.get url, q: query, appid: OPEN_WEATHER_MAP_API_KEY
+    rescue
+      return err_response('Network error')
     end
-    forecast.raw_response = JSON.parse('{"coord":{"lon":-0.13,"lat":51.51},"weather":[{"id":300,"main":"Drizzle","description":"light intensity drizzle","icon":"09d"}],"base":"stations","main":{"temp":280.32,"pressure":1012,"humidity":81,"temp_min":279.15,"temp_max":281.15},"visibility":10000,"wind":{"speed":4.1,"deg":80},"clouds":{"all":90},"dt":1485789600,"sys":{"type":1,"id":5091,"message":0.0103,"country":"GB","sunrise":1485762037,"sunset":1485794875},"id":2643743,"name":"London","cod":200}')
+    parse_response
+  end
+
+  def parse_response
+    forecast.raw_response = JSON.parse(@response.body)
     forecast.city = forecast.raw_response['name']
+    weather = forecast.raw_response['weather'].first
+    forecast.icon = "http://openweathermap.org/img/w/#{weather['icon']}.png"
+    forecast.weather_state = weather['description']
+    main_data = forecast.raw_response['main']
+    forecast.temperature = kelvin_to_celsius(main_data['temp']).round(1)
+  rescue
+    err_response 'Parsing error'
+  end
+
+  def err_response(error_text)
+    forecast.error = error_text
+  end
+
+  def kelvin_to_celsius(kelvin)
+    kelvin - 273.15
   end
 end

@@ -1,4 +1,3 @@
-- basic app
 - ajax
 - specs
 - autocomplete
@@ -6,3 +5,5 @@
 - detect locale
 - better i18n
 - better errors
+- caching
+- country code support
