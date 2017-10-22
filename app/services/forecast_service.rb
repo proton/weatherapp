@@ -3,12 +3,16 @@ class ForecastService
 
   attr_reader :city
   attr_reader :country
+  attr_reader :latitude
+  attr_reader :longtitude
   attr_reader :forecast
   attr_reader :response
 
-  def initialize(city = nil, country = nil)
-    @city = city if city.present?
-    @country = country if country.present?
+  def initialize(city: nil, country: nil, latitude: nil, longtitude: nil)
+    @city = city
+    @country = country
+    @latitude = latitude
+    @longtitude = longtitude
     @forecast = OpenStruct.new
   end
 
@@ -22,14 +26,22 @@ class ForecastService
 
   def load_request
     return err_response('OPEN_WEATHER_MAP_API_KEY is blank') if OPEN_WEATHER_MAP_API_KEY.blank?
-    query = "#{city}"
-    # TODO: country code support
     url = 'http://api.openweathermap.org/data/2.5/weather'
-    Faraday.get url, q: query, appid: OPEN_WEATHER_MAP_API_KEY
+    params = { appid: OPEN_WEATHER_MAP_API_KEY }
+    if city.present?
+      # TODO: country code support
+      # query = country.present? ? "#{city},#{country}" : city
+      query = city
+      params[:q] = query
+    else
+      params[:lat] = latitude
+      params[:lon] = longtitude
+    end
+    Faraday.get url, params
   end
 
   def process_request
-    return err_response('City is blank') if city.blank?
+    return err_response('You should provide city or latitude & longtitude') if city.blank? && (latitude.nil? || longtitude.nil?)
     begin
       @response = load_request
     rescue

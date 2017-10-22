@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 describe ForecastService do
-  subject(:forecast) { ForecastService.call('london', '') }
+  subject(:forecast) { ForecastService.call(city: 'london') }
 
-  context 'call with blank city' do
-    subject(:forecast) { ForecastService.call('', '') }
+  context 'call with blank data' do
+    subject(:forecast) { ForecastService.call }
     it 'returns error' do
-      expect(forecast.error).to eq('City is blank')
+      expect(forecast.error).to eq('You should provide city or latitude & longtitude')
     end
   end
 
   context 'city not found' do
-    subject(:forecast) { ForecastService.call('l', '') }
+    subject(:forecast) { ForecastService.call(city: 'l') }
     it 'returns error' do
       allow_any_instance_of(described_class).to receive(:load_request) do
         Faraday::Response.new(body: '{"cod":"404","message":"city not found"}')

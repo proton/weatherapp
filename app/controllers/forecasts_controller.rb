@@ -1,5 +1,14 @@
 class ForecastsController < ApplicationController
   def index
-    @forecast = ForecastService.call(params[:city], params[:country]) if params[:city]
+    @city = params[:city]
+    @country = params[:country]
+    if @city
+      @forecast = ForecastService.call(city: @city, country: @country)
+    else
+      latitude = rand(20.0..70.0)
+      longtitude = rand(-10.0..120.0)
+      @forecast = ForecastService.call(latitude: latitude, longtitude: longtitude)
+      @city = @forecast.city
+    end
   end
 end
