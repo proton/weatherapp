@@ -2,7 +2,7 @@ class ForecastsController < ApplicationController
   def index
     @city = params[:city]
     @country = params[:country]
-    if @city
+    if @city.present?
       @forecast = ForecastService.call(city: @city, country: @country)
     else
       latitude = rand(20.0..70.0)
