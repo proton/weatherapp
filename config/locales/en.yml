@@ -7,4 +7,5 @@ en:
       country: 'Country:'
       enter_country: Enter country
     forecast:
+      error: Error
       weather_in_x: Weather in %{city}

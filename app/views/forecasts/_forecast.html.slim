@@ -1,6 +1,10 @@
+
 - if forecast.error
-  = 123
+  .alert.alert-danger
+    h1= t('.error')
+    = forecast.error
 - else
-  h1.display-3
-    = t '.weather_in_x', city: forecast.city
-  p.lead= forecast.raw_response
+  .jumbotron
+    h1.display-3
+      = t '.weather_in_x', city: forecast.city
+    p.lead= forecast.raw_response

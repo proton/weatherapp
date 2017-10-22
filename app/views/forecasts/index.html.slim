@@ -1,11 +1,11 @@
-.jumbotron
-  = form_tag forecasts_path, method: :get, class: 'form-inline' do
-    .form-row.align-items-center
-      = label_tag 'city', t('.city')
-      = text_field_tag 'city', params[:city], placeholder: t('.enter_city'), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
-      = label_tag 'country', t('.country')
-      = text_field_tag 'country', params[:country], placeholder: t('.enter_country'), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
-      = submit_tag t('.show'), class: 'btn btn-primary'
+= form_tag forecasts_path, method: :get, class: 'form-inline' do
+  .form-row.align-items-center
+    = label_tag 'city', t('.city')
+    = text_field_tag 'city', params[:city], placeholder: t('.enter_city'), class: 'form-control mb-2 mr-sm-2 mb-sm-0', required: true
+    = label_tag 'country', t('.country')
+    = text_field_tag 'country', params[:country], placeholder: t('.enter_country'), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
+    = submit_tag t('.show'), class: 'btn btn-primary'
+hr.hr
 
-  - if @forecast
-    = render partial: 'forecast', locals: { forecast: @forecast }
+- if @forecast
+  = render partial: 'forecast', locals: { forecast: @forecast }
