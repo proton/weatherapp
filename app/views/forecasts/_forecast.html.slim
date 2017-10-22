@@ -1,0 +1,6 @@
+- if forecast.error
+  = 123
+- else
+  h1.display-3
+    = t '.weather_in_x', city: forecast.city
+  p.lead= forecast.raw_response

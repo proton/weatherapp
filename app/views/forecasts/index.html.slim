@@ -1,20 +1,11 @@
 .jumbotron
-  h1.display-3 Jumbotron heading
-  p.lead Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-  p
-    a.btn.btn-lg.btn-success href="#" role="button"  Sign up today
-.row.marketing
-  .col-lg-6
-    h4 Subheading
-    p Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.
-    h4 Subheading
-    p Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.
-    h4 Subheading
-    p Maecenas sed diam eget risus varius blandit sit amet non magna.
-  .col-lg-6
-    h4 Subheading
-    p Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.
-    h4 Subheading
-    p Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.
-    h4 Subheading
-    p Maecenas sed diam eget risus varius blandit sit amet non magna.
+  = form_tag forecasts_path, method: :get, class: 'form-inline' do
+    .form-row.align-items-center
+      = label_tag 'city', t('.city')
+      = text_field_tag 'city', params[:city], placeholder: t('.enter_city'), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
+      = label_tag 'country', t('.country')
+      = text_field_tag 'country', params[:country], placeholder: t('.enter_country'), class: 'form-control mb-2 mr-sm-2 mb-sm-0'
+      = submit_tag t('.show'), class: 'btn btn-primary'
+
+  - if @forecast
+    = render partial: 'forecast', locals: { forecast: @forecast }
