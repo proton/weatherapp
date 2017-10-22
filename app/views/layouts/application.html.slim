@@ -1,0 +1,28 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"
+    title Some Weather App
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    .container
+      header.header.clearfix
+        nav
+          ul.nav.nav-pills.float-right
+            li.nav-item
+              a.nav-link.active href="#"
+                | Home
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link href="#"  About
+            li.nav-item
+              a.nav-link href="#"  Contact
+        h3.text-muted Project name
+      main role="main"
+        = yield
+      footer.footer
+        p &copy; Company 2017
+          /! /container
