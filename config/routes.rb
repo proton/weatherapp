@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :forecasts, only: :index do
-    get :retrieve, on: :collection
-  end
+  resources :forecasts, only: :index
 
   root 'forecasts#index'
 end
