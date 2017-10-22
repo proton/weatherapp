@@ -2,7 +2,6 @@
 - specs
 - autocomplete
 - realtime update
-- detect locale
 - better i18n
 - better errors
 - caching
